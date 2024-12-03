@@ -1,5 +1,8 @@
 // app/page.tsx
+'use client'
+
 import Link from 'next/link';
+import ServicesCarousel from '/Users/syauqimuhammad/Documents/KULIAH/SEM4/SEM5(7)/Kemjar/Praktikum/Project/fake-website/components/servicesCarousel.tsx'; // Import the carousel component
 
 const HomePage = () => {
   return (
@@ -124,6 +127,12 @@ const HomePage = () => {
           >
             We provide secure, reliable, and trustworthy services to our users. Explore more about our services and how we keep you safe.
           </p>
+          
+          {/* Services Carousel Section */}
+          <div style={{ marginBottom: '40px' }}>
+            <ServicesCarousel />
+          </div>
+
           <Link
             href="/about"
             style={{

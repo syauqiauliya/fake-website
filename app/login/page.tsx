@@ -2,11 +2,16 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation'; // Import useSearchParams for accessing query params
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  
+  // Get the redirectUrl from query parameters
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get('redirectUrl'); // Vulnerable parameter
 
   // Handle login form submission
   const handleLogin = (e: React.FormEvent) => {
@@ -23,8 +28,12 @@ export default function Login() {
     );
 
     if (user) {
-      // Redirect to home page after successful login
-      router.push('/home');
+      // If redirectUrl exists, use it, otherwise go to the home page
+      if (redirectUrl) {
+        router.push(redirectUrl); // Vulnerable redirect
+      } else {
+        router.push('/home'); // Default redirect to home
+      }
     } else {
       alert('Invalid credentials');
     }
