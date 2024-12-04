@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  
+  const [redirectUrl, setRedirectUrl] = useState<string>('');
 
   // Hardcoded user credentials
   const users = [
@@ -14,6 +16,15 @@ export default function Login() {
     { username: 'syauqi', password: 'syauqipassword' },
     { username: 'surya', password: 'suryapassword' },
   ];
+
+  // Get redirect URL from query parameters
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirect = urlParams.get('redirectUrl');
+    if (redirect) {
+      setRedirectUrl(redirect); // Save the redirect URL
+    }
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,8 +35,14 @@ export default function Login() {
     if (user) {
       // Store login state in localStorage
       localStorage.setItem('isLoggedIn', 'true');
-      // Redirect to the services page
-      router.push('/services');
+      
+      // Redirect to the URL passed in the 'redirectUrl' query parameter
+      if (redirectUrl) {
+        router.push(redirectUrl);
+      } else {
+        // If no redirectUrl, go to services by default
+        router.push('/services');
+      }
     } else {
       alert('Invalid credentials');
     }
