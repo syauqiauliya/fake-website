@@ -7,7 +7,7 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  
+
   const [redirectUrl, setRedirectUrl] = useState<string>('');
 
   // Hardcoded user credentials
@@ -20,9 +20,10 @@ export default function Login() {
   // Get redirect URL from query parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const redirect = urlParams.get('redirectUrl');
+    const redirect = urlParams.get('redirect');
     if (redirect) {
-      setRedirectUrl(redirect); // Save the redirect URL
+      console.log("Redirect URL:", redirect); // Log to check
+      setRedirectUrl(decodeURIComponent(redirect)); // Decode the URL
     }
   }, []);
 
@@ -36,11 +37,11 @@ export default function Login() {
       // Store login state in localStorage
       localStorage.setItem('isLoggedIn', 'true');
       
-      // Redirect to the URL passed in the 'redirectUrl' query parameter
-      if (redirectUrl) {
-        router.push(redirectUrl);
+      // Validate the redirect URL to ensure it's an absolute URL (http or https)
+      if (redirectUrl && /^https?:\/\//.test(redirectUrl)) {
+        router.push(redirectUrl); // Redirect to the malicious URL
       } else {
-        // If no redirectUrl, go to services by default
+        // If no valid redirectUrl, or if it's not an external URL, redirect to '/services' by default
         router.push('/services');
       }
     } else {
