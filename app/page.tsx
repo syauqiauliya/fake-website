@@ -2,7 +2,7 @@
 'use client'
 
 import Link from 'next/link';
-import ServicesCarousel from '/Users/syauqimuhammad/Documents/KULIAH/SEM4/SEM5(7)/Kemjar/Praktikum/Project/fake-website/components/servicesCarousel.tsx'; // Import the carousel component
+import ServicesCarousel from '../components/servicesCarousel'; // Relative path
 
 const HomePage = () => {
   return (
