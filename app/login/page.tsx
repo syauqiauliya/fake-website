@@ -1,47 +1,34 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation'; // Import useSearchParams for accessing query params
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  
-  // Get the redirectUrl from query parameters
-  const searchParams = useSearchParams();
-  const redirectUrl = searchParams.get('redirectUrl'); // Vulnerable parameter
 
-  // Handle login form submission
+  // Hardcoded user credentials
+  const users = [
+    { username: 'admin', password: 'adminpassword' },
+    { username: 'syauqi', password: 'syauqipassword' },
+    { username: 'surya', password: 'suryapassword' },
+  ];
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Hardcoded user credentials (admin, syauqi, surya)
-    const users = [
-      { username: 'admin', password: 'adminpassword' },
-      { username: 'syauqi', password: 'syauqipassword' },
-      { username: 'surya', password: 'suryapassword' },
-    ];
-
     const user = users.find(
       (user) => user.username === username && user.password === password
     );
 
     if (user) {
-      // If redirectUrl exists, use it, otherwise go to the home page
-      if (redirectUrl) {
-        router.push(redirectUrl); // Vulnerable redirect
-      } else {
-        router.push('/home'); // Default redirect to home
-      }
+      // Store login state in localStorage
+      localStorage.setItem('isLoggedIn', 'true');
+      // Redirect to the services page
+      router.push('/services');
     } else {
       alert('Invalid credentials');
     }
-  };
-
-  // Handle navigating back to the home page
-  const handleBackToHome = () => {
-    router.push('/');
   };
 
   return (
@@ -73,13 +60,6 @@ export default function Login() {
           </div>
           <div className="flex justify-between items-center">
             <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md">Login</button>
-            <button
-              type="button"
-              onClick={handleBackToHome}
-              className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md"
-            >
-              Back to Home
-            </button>
           </div>
         </form>
       </div>

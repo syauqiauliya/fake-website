@@ -1,30 +1,48 @@
-// app/services/buy-now.tsx
-const BuyNow = () => {
+'use client';
+
+import { useRouter } from 'next/navigation';
+
+const ServicesPage = () => {
+  const router = useRouter();
+
+  const handleBackToHome = () => {
+    // Ensure it goes back to the logged-in home page
+    router.push('/home');
+  };
+
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
-      <h1 className="text-3xl font-bold text-center mb-4">Buy Now</h1>
-      <p className="text-lg text-gray-700 mb-6">Choose the service you’d like to purchase and proceed with the payment!</p>
-
-      <h3 className="text-xl font-semibold mb-4">Service 1: Advanced AI Integration 🤖</h3>
-      <p className="text-md text-gray-700 mb-6">Boosts your system’s AI by 200%</p>
-
-      <h3 className="text-xl font-semibold mb-4">Service 2: Quantum Computing Solutions ⚛️</h3>
-      <p className="text-md text-gray-700 mb-6">Unlocks the power of quantum computing!</p>
-
-      <h3 className="text-xl font-semibold mb-4">Service 3: Blockchain TrustTech 🔒</h3>
-      <p className="text-md text-gray-700 mb-6">Provides top-notch blockchain security for all transactions</p>
-
-      <h3 className="text-xl font-semibold mb-4">Service 4: Cloud-Based Innovation ☁️</h3>
-      <p className="text-md text-gray-700 mb-6">Expands your Cloud flexibility across platforms</p>
-
-      <h3 className="text-xl font-semibold mb-4">Service 5: Autonomous Data Processing 🧠</h3>
-      <p className="text-md text-gray-700 mb-6">Streamlines data for a seamless experience</p>
-
-      <button className="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600 transition">
-        Proceed to Checkout
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10 text-center">
+      <h1 className="text-3xl font-bold mb-4">Welcome to Our Services</h1>
+      <p className="text-md text-gray-700 mb-6">Explore our services now that you're logged in!</p>
+      
+      <button
+        onClick={handleBackToHome}
+        className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-md"
+      >
+        Back to Dashboard
       </button>
+
+      {/* Add the services table or other content */}
+      <table className="min-w-full mt-6">
+        <thead>
+          <tr>
+            <th className="p-4 border">Service</th>
+            <th className="p-4 border">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="p-4 border">Service 1</td>
+            <td className="p-4 border">$100</td>
+          </tr>
+          <tr>
+            <td className="p-4 border">Service 2</td>
+            <td className="p-4 border">$200</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default BuyNow;
+export default ServicesPage;
