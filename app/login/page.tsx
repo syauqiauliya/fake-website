@@ -10,6 +10,9 @@ export default function Login() {
 
   const [redirectUrl, setRedirectUrl] = useState<string>('');
 
+  // Whitelist of allowed redirect URLs
+  const whitelist = ['/services', '/dashboard'];
+
   // Hardcoded user credentials
   const users = [
     { username: 'admin', password: 'adminpassword' },
@@ -36,12 +39,12 @@ export default function Login() {
     if (user) {
       // Store login state in localStorage
       localStorage.setItem('isLoggedIn', 'true');
-      
-      // Validate the redirect URL to ensure it's an absolute URL (http or https)
-      if (redirectUrl) {
-        router.push(redirectUrl); // Redirect to the malicious URL
+
+      // Validate the redirect URL against the whitelist
+      if (redirectUrl && whitelist.includes(redirectUrl)) {
+        router.push(redirectUrl); // Redirect to the whitelisted URL
       } else {
-        // If no valid redirectUrl, or if it's not an external URL, redirect to '/services' by default
+        // If no valid redirectUrl, redirect to '/services' by default
         router.push('/services');
       }
     } else {
