@@ -38,7 +38,7 @@ export default function Login() {
       localStorage.setItem('isLoggedIn', 'true');
       
       // Validate the redirect URL to ensure it's an absolute URL (http or https)
-      if (redirectUrl && /^https?:\/\//.test(redirectUrl)) {
+      if (redirectUrl) {
         router.push(redirectUrl); // Redirect to the malicious URL
       } else {
         // If no valid redirectUrl, or if it's not an external URL, redirect to '/services' by default
